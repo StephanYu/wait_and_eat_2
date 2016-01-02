@@ -8,6 +8,7 @@
       // Third party modules
       'firebase',
       // Custom modules
+      'app.auth',
       'app.landing',
       'app.waitList'
     ]);
