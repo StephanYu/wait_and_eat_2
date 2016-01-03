@@ -16,9 +16,32 @@
         password: ''
       };
       vm.register = register;
+      vm.login = login;
+      vm.logout = logout;
 
       function register(user) {
-        return fbAuthObj.$createUser(user);
+        return fbAuthObj.$createUser(user)
+          .then(function() {
+            vm.login(user);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+
+      function login(user) {
+        return fbAuthObj.$authWithPassword(user)
+          .then(function(loggedInUser) {
+            console.log(loggedInUser);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+
+      function logout() {
+        fbAuthObj.$unauth();
+        console.log("Logged out!");
       }
       
     }
