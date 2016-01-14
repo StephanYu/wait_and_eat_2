@@ -5,13 +5,13 @@
     .module('app.waitList')
     .controller('WaitListController', WaitListController);
 
-    WaitListController.$inject = ['$firebaseArray'];
+    WaitListController.$inject = ['$firebaseArray', 'FIREBASE_URL'];
 
-    function WaitListController($firebaseArray) {
+    function WaitListController($firebaseArray, FIREBASE_URL) {
       
       var vm = this;
-      var partiesRef = new Firebase('https://waitandeat-syu-v2.firebaseio.com/').child('parties');
-      var textMessagesRef = new Firebase('https://waitandeat-syu-v2.firebaseio.com/').child('textmessages');
+      var partiesRef = new Firebase(FIREBASE_URL).child('parties');
+      var textMessagesRef = new Firebase(FIREBASE_URL).child('textmessages');
       
       function Party() {
         this.name = '';

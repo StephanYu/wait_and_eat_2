@@ -5,10 +5,10 @@
     .module('app.auth')
     .controller('AuthController', AuthController);
 
-    AuthController.$inject = ['$firebaseAuth'];
-    function AuthController($firebaseAuth) {
+    AuthController.$inject = ['$firebaseAuth', '$location', 'FIREBASE_URL'];
+    function AuthController($firebaseAuth, $location, FIREBASE_URL) {
       var vm = this;
-      var fbRef = new Firebase('https://waitandeat-syu-v2.firebaseio.com/');
+      var fbRef = new Firebase(FIREBASE_URL);
       var fbAuthObj = $firebaseAuth(fbRef);
       
       vm.user = {
@@ -41,7 +41,7 @@
 
       function logout() {
         fbAuthObj.$unauth();
-        console.log("Logged out!");
+        $location.path('/');
       }
       
     }
