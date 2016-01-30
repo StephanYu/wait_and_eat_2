@@ -5,24 +5,14 @@
     .module('app.waitList')
     .controller('WaitListController', WaitListController);
 
-    WaitListController.$inject = ['$firebaseArray', 'FIREBASE_URL', 'partyService'];
+    WaitListController.$inject = ['textMessageService', 'partyService'];
 
-    function WaitListController($firebaseArray, FIREBASE_URL, partyService) {
+    function WaitListController(textMessageService,  partyService) {
       
       var vm = this;
-      var partiesRef = new Firebase(FIREBASE_URL).child('parties');
-      var textMessagesRef = new Firebase(FIREBASE_URL).child('textmessages');
       
-      function Party() {
-        this.name = '';
-        this.phone = '';
-        this.size = '';
-        this.done = false;
-        this.notified = false;
-      }
-
       vm.newParty = new partyService.Party();
-      vm.parties = $firebaseArray(partiesRef);
+      vm.parties = partyService.parties;
       vm.addParty = addParty;
       vm.removeParty = removeParty;
       vm.sendTextMessage = sendTextMessage;
@@ -38,14 +28,7 @@
       }
 
       function sendTextMessage(party) {
-        var newTextMessage = {
-          phoneNumber: party.phone,
-          size: party.size,
-          name: party.name
-        };
-        textMessagesRef.push(newTextMessage);
-        party.notified = true;
-        vm.parties.$save(party);
+        textMessageService.sendTextMessage(party, vm.parties);
       }
 
       function toggleDone(party) {
