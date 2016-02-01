@@ -15,8 +15,8 @@
 
       return service;
 
-      /////////////////////////
-
+      /*------------------------*/
+      
       function Party() {
         this.name = '';
         this.phone = '';

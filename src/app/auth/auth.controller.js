@@ -5,11 +5,9 @@
     .module('app.auth')
     .controller('AuthController', AuthController);
 
-    AuthController.$inject = ['$firebaseAuth', '$location', 'FIREBASE_URL'];
-    function AuthController($firebaseAuth, $location, FIREBASE_URL) {
+    AuthController.$inject = ['$location', 'authService'];
+    function AuthController($location, authService) {
       var vm = this;
-      var fbRef = new Firebase(FIREBASE_URL);
-      var fbAuthObj = $firebaseAuth(fbRef);
       
       vm.user = {
         email: '',
@@ -18,9 +16,10 @@
       vm.register = register;
       vm.login = login;
       vm.logout = logout;
+      vm.isLoggedIn = authService.isLoggedIn;
 
       function register(user) {
-        return fbAuthObj.$createUser(user)
+        return authService.register(user)
           .then(function() {
             vm.login(user);
           })
@@ -30,7 +29,7 @@
       }
 
       function login(user) {
-        return fbAuthObj.$authWithPassword(user)
+        return authService.$authWithPassword(user)
           .then(function(loggedInUser) {
             console.log(loggedInUser);
           })
@@ -40,9 +39,9 @@
       }
 
       function logout() {
-        fbAuthObj.$unauth();
+        authService.logout();
         $location.path('/');
       }
-      
+
     }
 })();
