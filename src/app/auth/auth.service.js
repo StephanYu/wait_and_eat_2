@@ -31,12 +31,12 @@
         return firebaseAuthObj.$authWithPassword(user);
       }
 
-      function logout(user) {
-        firebaseAuthObj.$unauth(user);
+      function logout() {
+        firebaseAuthObj.$unauth();
       }
 
       function isLoggedIn() {
-        return firebaseAuthObj.$onAuth();
+        return firebaseAuthObj.$getAuth();
       }
     }
 })();
