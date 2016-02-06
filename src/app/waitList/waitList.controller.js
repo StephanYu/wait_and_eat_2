@@ -12,7 +12,7 @@
       var vm = this;
       
       vm.newParty = new partyService.Party();
-      vm.parties = partyService.parties;
+      vm.parties = partyService.getPartiesByUser(user.uid);
       vm.addParty = addParty;
       vm.removeParty = removeParty;
       vm.sendTextMessage = sendTextMessage;
