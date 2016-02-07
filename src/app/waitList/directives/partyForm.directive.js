@@ -9,15 +9,27 @@
       return {
         templateUrl: 'app/waitList/directives/partyForm.html',
         restrict: 'E',
-        scope: {},
         controller: partyFormController,
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        bindToController: true,
+        scope: {
+          parties: '='
+        }
       }
     }
 
     partyFormController.$inject = ['partyService'];
-    
+
     function partyFormController(partyService) {
-      
+      var vm = this;
+
+      vm.newParty = new partyService.Party();
+      vm.addParty = addParty;
+
+      function addParty() {
+        vm.parties.$add(vm.newParty);
+        vm.newParty = new partyService.Party();
+      }
+
     }
 })();
