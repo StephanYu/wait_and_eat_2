@@ -5,9 +5,9 @@
     .module('app.auth')
     .factory('authService', authService);
 
-    authService.$inject = ['$firebaseAuth', 'firebaseDataService'];
+    authService.$inject = ['$firebaseAuth', 'firebaseDataService', 'partyService'];
 
-    function authService($firebaseAuth, firebaseDataService) {
+    function authService($firebaseAuth, firebaseDataService, partyService) {
 
       var firebaseAuthObj = $firebaseAuth(firebaseDataService.root);
 
@@ -16,7 +16,8 @@
         register: register,
         login: login,
         logout: logout,
-        isLoggedIn: isLoggedIn
+        isLoggedIn: isLoggedIn,
+        sendWelcomeEmail: sendWelcomeEmail
       };
 
       return service; 
@@ -32,11 +33,18 @@
       }
 
       function logout() {
+        partyService.reset();
         firebaseAuthObj.$unauth();
       }
 
       function isLoggedIn() {
         return firebaseAuthObj.$getAuth();
+      }
+
+      function sendWelcomeEmail(emailAddress) {
+        firebaseDataService.emails.push({
+          emailAddress: emailAddress
+        });
       }
     }
 })();
