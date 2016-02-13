@@ -13,7 +13,9 @@
         controllerAs: 'vm',
         bindToController: true,
         scope: {
-          error: '='
+          error: '=',
+          formTitle: '@',
+          submitAction: '&'
         }
       }
     }
@@ -21,6 +23,9 @@
     function AuthFormController() {
       var vm = this;
 
-
+      vm.user = {
+        email: '',
+        password: ''
+      };
     }
 })();
