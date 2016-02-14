@@ -8,7 +8,9 @@
   textMessageService.$inject = ['firebaseDataService'];
   
   function textMessageService(firebaseDataService) {
-    var service = {};
+    var service = {
+      sendTextMessage: sendTextMessage    
+    };
 
     return service;
 
